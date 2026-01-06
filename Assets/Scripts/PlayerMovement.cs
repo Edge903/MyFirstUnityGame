@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequested = true;
-            Debug.Log("jump input");
         }
 
     }
@@ -50,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         if (jumpRequested && IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            Debug.Log("jump applied");
         }
         jumpRequested = false;
 
