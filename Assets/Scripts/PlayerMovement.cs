@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -25,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 velocity = moveInput * moveSpeed;
+        Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.z;
+        Vector3 velocity = moveDirection * moveSpeed;
         Vector3 newPosition = rb.position + velocity * Time.fixedDeltaTime;
 
         rb.MovePosition(newPosition);
