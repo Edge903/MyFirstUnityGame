@@ -3,28 +3,27 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
 
-    public float mouseSensitivity = 600f;
+    public float mouseSensitivity = 1f;
     public Transform cameraPivot;
-    private float xRotation = 0f;
+
+    float pitch, yaw;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;    
+        Cursor.visible = false;
+        pitch = 0f;
+        yaw = transform.eulerAngles.y;
     }
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        // Vertical rotation
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-
-        cameraPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        // Horizontal rotation
-        transform.Rotate(Vector3.up * mouseX);
+        yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
+        pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+        
+        pitch = Mathf.Clamp(pitch, -80f, 80f);
+        
+        transform.eulerAngles = new Vector3(0f, yaw, 0f);
+        cameraPivot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 }
