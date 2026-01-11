@@ -7,17 +7,17 @@ public class Damageable : MonoBehaviour, IDamageable
     public Rigidbody rb;
     public float knockbackMultiplier = 1f;
 
-    public void TakeDamage (float incomingDamage, Vector3 hitDirection)
+    public void TakeDamage (DamageInfo info)
     {
         float finalDamage = Mathf.Max(
-            incomingDamage * (stats.defense / (stats.defense + 100)),
+            info.damage * (stats.defense / (stats.defense + 100)),
             1f
         );
 
         stats.health -= finalDamage;
-        if (rb != null)
+        if (rb != null && info.knockbackForce > 0f)
         {
-            rb.AddForce(hitDirection * knockbackMultiplier, ForceMode.Impulse);
+            rb.AddForce(info.direction * info.knockbackForce, ForceMode.Impulse);
         }
 
         if (stats.health <= 0)

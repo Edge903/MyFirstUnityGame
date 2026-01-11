@@ -10,7 +10,14 @@ public class AttackHitbox : MonoBehaviour
         if (other.TryGetComponent<IDamageable>(out var damageable))
         {
             Vector3 dir = (other.transform.position - transform.position).normalized;
-            damageable.TakeDamage(damage, dir);
+            DamageInfo info = new DamageInfo
+            {
+                damage = damage,
+                direction = dir,
+                knockbackForce = knockbackForce
+            };
+            
+            damageable.TakeDamage(info);
         }
     }
 
